@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/electron-vite.animate.svg'
-import './App.css'
+import SendbirdProvider from "@sendbird/uikit-react/SendbirdProvider";
+import "@sendbird/uikit-react/dist/index.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { ChatSection } from "./screens/chat";
+import { ChatListSection } from "./screens/chat-list";
+import { randomid } from "./utils/randomid.ts";
+import styled from "styled-components";
+import { useState } from "react";
+import { GroupChannel } from "@sendbird/chat/groupChannel";
 
-  return (
-    <>
-      <div>
-        <a href="https://electron-vite.github.io" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export function getUserId() {
+  const key = "user-id";
+  const userId = localStorage.getItem(key);
+  if (userId) return userId;
+
+  const newUserId = randomid();
+  localStorage.setItem(key, newUserId);
+  return newUserId;
 }
 
-export default App
+export function getBotId() {
+  return import.meta.env.VITE_BOT_ID;
+}
+
+export function getAppId() {
+  return import.meta.env.VITE_APP_ID;
+}
+
+function App() {
+  const [focusedChannel, setFocusedChannel] = useState<GroupChannel | null>(
+    null,
+  );
+
+  return (
+    <Container>
+      <SendbirdProvider
+        appId={getAppId()}
+        userId={getUserId()}
+        nickname={"Me"}
+        uikitOptions={{
+          groupChannel: {
+            enableMention: false,
+            enableReactions: false,
+            enableTypingIndicator: true,
+            replyType: "none",
+            input: { enableDocument: false },
+            typingIndicatorTypes: new Set(["bubble"]),
+          },
+        }}
+      >
+        <ChatListSection
+          focusedChannel={focusedChannel}
+          onFocusChannel={setFocusedChannel}
+        />
+        <ChatSection focusedChannel={focusedChannel} />
+      </SendbirdProvider>
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+`;
+
+export default App;
