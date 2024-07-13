@@ -50,6 +50,11 @@ const Logo = styled.img`
   height: 40px;
   object-fit: contain;
   cursor: pointer;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: #ececec;
+  }
 `;
 
 const NewChat = styled(PiNotePencilBold)`
