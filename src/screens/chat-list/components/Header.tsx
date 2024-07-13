@@ -36,12 +36,13 @@ export const Header = ({ onCreateChannel }: Props) => {
 };
 
 const Container = styled.div`
-  height: 3.5rem;
-  padding: 0 1rem;
+  height: 65px;
+  padding: 0 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #dedede;
+  box-sizing: border-box;
 `;
 
 const Logo = styled.img`

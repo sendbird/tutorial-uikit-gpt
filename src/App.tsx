@@ -44,15 +44,20 @@ function App() {
             enableTypingIndicator: true,
             replyType: "none",
             input: { enableDocument: false },
+            enableSuggestedReplies: true,
+            enableMarkdownForUserMessage: true,
             typingIndicatorTypes: new Set(["bubble"]),
           },
         }}
       >
         <ChatListSection
           focusedChannel={focusedChannel}
-          onFocusChannel={setFocusedChannel}
+          onFocusChannel={(channel) => setFocusedChannel(channel)}
         />
-        <ChatSection focusedChannel={focusedChannel} />
+        <ChatSection
+          focusedChannel={focusedChannel}
+          onLeaveChannel={() => setFocusedChannel(null)}
+        />
       </SendbirdProvider>
     </Container>
   );

@@ -1,7 +1,7 @@
 {
-  "name": "uikit-gpt",
+  "name": "sendbird-uikit-gpt",
   "version": "1.0.0",
-  "description": "Sendbird GPT app with uikit",
+  "description": "Sendbird uikit gpt app",
   "type": "module",
   "module": "main.js",
   "packageManager": "yarn@4.1.1",

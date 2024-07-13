@@ -13,6 +13,7 @@ export const ChatListSection = ({ focusedChannel, onFocusChannel }: Props) => {
   return (
     <GroupChannelListSection
       onCreateChannelClick={noop}
+      selectedChannelUrl={focusedChannel?.url}
       onChannelSelect={onFocusChannel}
       onChannelCreated={onFocusChannel}
       renderHeader={() => <Header onCreateChannel={onFocusChannel} />}
@@ -30,5 +31,14 @@ const GroupChannelListSection = styled(GroupChannelList)`
   && {
     min-width: 260px;
     background-color: #f9f9f9;
+
+    .sendbird-channel-list__header {
+      height: unset;
+      min-height: unset;
+    }
+
+    .sendbird-channel-list__body {
+      padding: 12px 0;
+    }
   }
 `;
